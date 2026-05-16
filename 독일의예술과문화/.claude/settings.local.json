@@ -1,0 +1,11 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(nlm notebook *)",
+      "Bash(nlm source *)",
+      "Bash(python3 -c ' *)",
+      "Bash(python3 *)",
+      "Bash(ls *)"
+    ]
+  }
+}

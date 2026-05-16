@@ -1,0 +1,3 @@
+﻿  TCPClient_FixedVariable.cpp
+C:\minkang_github\H_Univ_4\서버\수업시간 사용하는 예제 소스들-20260311\Source - 소켓\Source(신버전;VC2015~)\Chapter05\TCPClient_FixedVariable\TCPClient_FixedVariable.cpp(74,9): warning C4996: 'strncpy': This function or variable may be unsafe. Consider using strncpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+  TCPClient_FixedVariable.vcxproj -> C:\minkang_github\H_Univ_4\서버\수업시간 사용하는 예제 소스들-20260311\Source - 소켓\Source(신버전;VC2015~)\Chapter05\TCPClient_FixedVariable\Debug\TCPClient_FixedVariable.exe

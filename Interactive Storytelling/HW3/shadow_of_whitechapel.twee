@@ -1,0 +1,515 @@
+:: StoryTitle
+화이트채플의 그림자
+
+:: StoryData
+{
+  "ifid": "C4D5E6F7-A8B9-1234-CDEF-567890ABCDEF",
+  "format": "SugarCube",
+  "format-version": "2.36.1",
+  "start": "Start",
+  "zoom": 1
+}
+
+:: StoryInit
+<<set $playerName to "">>
+<<set $clues to 0>>
+<<set $suspicion to 0>>
+
+:: StoryScript [script]
+$(document).on(':passagestart', function() {
+  if (window._sfx) {
+    window._sfx.pause();
+    window._sfx.currentTime = 0;
+    window._sfx = null;
+  }
+});
+
+:: StoryStylesheet [stylesheet]
+@import url('https://fonts.googleapis.com/css2?family=UnifrakturMaguntia&family=Noto+Serif+KR:wght@400;600&display=swap');
+
+body {
+  background-color: #080604;
+  background-image: url('img/bg.jpg');
+  background-size: cover;
+  background-attachment: fixed;
+  background-position: center;
+}
+
+#ui-bar {
+  display: none;
+}
+
+#passages {
+  margin: 0;
+  padding: 20px 0;
+}
+
+.passage {
+  font-family: 'Noto Serif KR', Georgia, serif;
+  font-size: 1.1em;
+  color: #e8d5b0;
+  max-width: 660px;
+  width: 90%;
+  margin: 30px auto;
+  padding: 40px 45px;
+  background-color: rgba(8, 5, 2, 0.88);
+  border: 1px solid #5a3e1a;
+  box-shadow: 0 0 40px rgba(0,0,0,0.95);
+  line-height: 2;
+}
+
+h1.title {
+  font-family: 'UnifrakturMaguntia', cursive;
+  font-size: 2.2em;
+  color: #c8913a;
+  text-align: center;
+  text-shadow: 0 0 20px rgba(200,145,58,0.4);
+  margin-bottom: 5px;
+}
+
+h2.location {
+  font-family: 'Noto Serif KR', serif;
+  font-size: 0.9em;
+  color: #a07840;
+  text-align: center;
+  font-style: italic;
+  letter-spacing: 0.15em;
+  border-bottom: 1px solid #3a2a10;
+  padding-bottom: 10px;
+  margin-bottom: 22px;
+}
+
+a.link-internal {
+  color: #c8913a;
+  text-decoration: none;
+  border-bottom: 1px dashed #6b4e1a;
+}
+
+a.link-internal:hover {
+  color: #f0b84a;
+  border-bottom-color: #f0b84a;
+  text-shadow: 0 0 8px rgba(240,184,74,0.4);
+}
+
+button {
+  display: block;
+  background-color: transparent;
+  color: #c8913a;
+  border: 1px dashed #6b4e1a;
+  padding: 9px 18px;
+  font-family: 'Noto Serif KR', serif;
+  font-size: 1em;
+  cursor: pointer;
+  margin: 8px 0;
+  transition: all 0.2s;
+  text-align: left;
+  width: 100%;
+}
+
+button:hover {
+  background-color: rgba(200,145,58,0.1);
+  color: #f0b84a;
+  border-color: #c8913a;
+}
+
+input[type="text"] {
+  background-color: transparent;
+  border: none;
+  border-bottom: 1px solid #6b4e1a;
+  color: #e8d5b0;
+  padding: 6px 10px;
+  font-family: 'Noto Serif KR', serif;
+  font-size: 1.05em;
+  outline: none;
+  width: 240px;
+  margin: 10px 0;
+}
+
+input[type="text"]:focus {
+  border-bottom-color: #c8913a;
+}
+
+.passage-image {
+  width: 100%;
+  max-height: 300px;
+  object-fit: cover;
+  margin-bottom: 22px;
+  border: 1px solid #3a2a10;
+  filter: sepia(0.5) brightness(0.65) contrast(1.1);
+  display: block;
+}
+
+.clue-tag {
+  display: inline-block;
+  background-color: rgba(200,145,58,0.08);
+  border: 1px solid #5a3e1a;
+  color: #a07840;
+  padding: 5px 14px;
+  font-size: 0.82em;
+  margin: 14px 0 4px;
+  letter-spacing: 0.03em;
+}
+
+.ending-title {
+  font-family: 'Noto Serif KR', serif;
+  font-size: 1.5em;
+  font-weight: 600;
+  color: #c8913a;
+  text-align: center;
+  margin: 8px 0 18px;
+}
+
+.score-line {
+  text-align: center;
+  color: #a07840;
+  font-size: 0.88em;
+  margin-bottom: 18px;
+}
+
+hr.divider {
+  border: none;
+  border-top: 1px solid #3a2a10;
+  margin: 22px 0;
+}
+
+
+:: Start
+<h1 class="title">The Shadow of Whitechapel</h1>
+
+<img src="img/title.jpg" class="passage-image" alt="안개 낀 런던의 밤거리">
+
+<p><em>1888년, 런던.<br>
+화이트채플의 안개 낀 골목에서 또 하나의 시신이 발견됐다.<br>
+다섯 번째 희생자. 런던 경시청은 한계를 인정하고 당신을 찾아왔다.</em></p>
+
+<p>탐정의 이름을 입력하시오:</p>
+
+<<textbox "$playerName" "홈즈">>
+
+<<button "사건을 맡는다.">>
+  <<if $playerName is "">><<set $playerName to "홈즈">><</if>>
+  <<run
+    if (!window._bgmPlaying) {
+      window._bgm = new Audio("audio/bgm.mp3");
+      window._bgm.loop = true;
+      window._bgm.volume = 0.2;
+      window._bgm.play();
+      window._bgmPlaying = true;
+    }
+  >>
+  <<goto "Intro">>
+<</button>>
+
+
+:: Intro
+<h2 class="location">— 베이커 스트리트, 당신의 서재 —</h2>
+
+<img src="img/newspaper.jpg" class="passage-image" alt="빅토리아 시대 신문 1면">
+
+<p>아침 신문이 검은 잉크로 비명을 지른다:</p>
+
+<p><strong>« 화이트채플의 악마, 마이터 스퀘어에서 다섯 번째 살인 »</strong></p>
+
+<p>시신은 새벽 2시에 발견됐다. 목격자도, 명확한 흉기도 없다.</p>
+
+<p>당신의 조수 <strong>에드먼드 그레이브스</strong>가 말없이 코트를 건네며 먼저 모자를 집어 든다.</p>
+
+<p><em>"출발하시겠습니까, $playerName 탐정님?"</em></p>
+
+<p>그의 단정한 얼굴에는 언제나처럼 완벽하게 평온한 미소가 걸려 있다.</p>
+
+[[현장으로 향한다.->Street]]
+
+
+:: Street
+<h2 class="location">— 마이터 스퀘어, 화이트채플 —</h2>
+
+<img src="img/street.jpg" class="passage-image" alt="가스등이 빛나는 안개 낀 런던 골목">
+
+<script>
+window._sfx = new Audio("audio/wind.mp3");
+window._sfx.volume = 0.4;
+window._sfx.play().catch(function(){});
+
+setTimeout(function() {
+  window._sfx = new Audio("audio/write.mp3");
+  window._sfx.volume = 0.5;
+  window._sfx.play().catch(function(){});
+}, 1500);
+</script>
+
+<p>현장에 도착하자 비릿한 피 냄새와 짙은 안개가 당신을 반긴다.</p>
+
+<p>에드먼드가 몇 걸음 뒤에 서서 낡은 가죽 수첩을 펼치고 무언가를 적는다.</p>
+
+<p><em>"진입로와 도주로로 쓰일 만한 곳은 두 군데입니다. 시신이 발견된 왼쪽 어두운 골목, 그리고 길 건너 밤새 영업하는 텐 벨스 선술집."</em></p>
+
+<p>어디를 먼저 조사하겠는가?</p>
+
+[[어두운 골목을 샅샅이 뒤져본다.->Alley]]
+[[선술집으로 가 목격자나 수상한 자를 찾는다.->Pub]]
+
+
+:: Alley
+<h2 class="location">— 골목 안쪽 —</h2>
+
+<img src="img/alley.jpg" class="passage-image" alt="빅토리아 시대의 좁고 어두운 골목">
+
+<script>
+window._sfx = new Audio("audio/footstep.mp3");
+window._sfx.volume = 0.5;
+window._sfx.play().catch(function(){});
+</script>
+
+<p>골목 후미진 곳, 진흙 속에서 무언가가 빛난다.</p>
+
+<p>가죽 장갑 한 짝이다. 손목 부분이 찢겨 있고, 바느질이 정교하다. 빈민가에 어울리지 않는 고급품.</p>
+
+<p>장갑 안쪽에 이니셜 <strong>'E'</strong>가 희미하게 수놓아져 있다.</p>
+
+<p><em>'E'... 당신의 조수 에드먼드(Edmund)? 아니면 길 건너 선술집 주인인 일라이어스(Elias)?</em></p>
+
+<p>게다가 이 진흙 자국... 방금 누군가 밟고 지나간 것처럼 축축하다.</p>
+
+<p>당신은 말없이 장갑을 주머니에 넣는다.</p>
+
+<<set $clues += 1>>
+<<set $suspicion += 1>>
+
+<div class="clue-tag">단서 획득: 이니셜 'E'의 장갑 &nbsp;|&nbsp; 증거: $clues &nbsp;·&nbsp; 의심도: $suspicion</div>
+
+[[조사를 마치고 에드먼드에게 돌아간다.->Suspect]]
+
+
+:: Pub
+<h2 class="location">— 텐 벨스 선술집, 화이트채플 —</h2>
+
+<img src="img/pub.jpg" class="passage-image" alt="어둡고 탁한 빅토리아 시대 선술집 내부">
+
+<script>
+window._sfx = new Audio("audio/pub.mp3");
+window._sfx.volume = 0.35;
+window._sfx.play().catch(function(){});
+</script>
+
+<p>선술집 주인 <strong>일라이어스</strong>가 카운터를 닦고 있다. 당신이 다가가자, 그는 흠칫 놀라며 닦던 천을 황급히 아래로 숨긴다. 언뜻 보인 천에는 검붉은 얼룩이 묻어 있었다.</p>
+
+<p><em>"어젯밤 1시경, 여기서 누굴 봤소?"</em></p>
+
+<p>당신의 물음에 일라이어스는 시선을 피하며 거칠게 답한다.<br>
+<em>"난 바빠서 못 봤소. 다만... 가게 구석에 있던 늙은이가, 말쑥한 코트를 입고 가죽 수첩을 든 신사가 골목에서 나오는 걸 봤다고 떠들긴 하더군."</em></p>
+
+<p>그가 테이블을 짚을 때, 당신은 그의 손등에 누군가에게 길게 할퀸 핏자국 세 줄이 선명하게 새겨진 것을 본다. 희생자가 반항하며 남긴 흔적일까?</p>
+
+<<set $clues += 1>>
+
+<div class="clue-tag">단서 획득: 일라이어스의 핏자국과 목격자 진술 &nbsp;|&nbsp; 증거: $clues &nbsp;·&nbsp; 의심도: $suspicion</div>
+
+[[선술집을 나와 에드먼드에게 돌아간다.->Suspect]]
+
+
+:: Suspect
+<h2 class="location">— 베이커 스트리트, 당신의 숙소 —</h2>
+
+<img src="img/study.jpg" class="passage-image" alt="촛불이 켜진 빅토리아 시대 서재, 밤">
+
+<p>현장 조사를 마치고 돌아온 숙소. 에드먼드가 코트를 벗어 걸며 묻는다.</p>
+
+<p><em>"유의미한 단서가 있었습니까?"</em></p>
+
+<p>그때, 당신의 시선이 그의 발끝에 머문다.</p>
+
+<p>그의 가죽 장화 굽에, 아까 현장에서 보았던 것과 똑같은 <strong>붉은 진흙</strong>이 잔뜩 묻어 있다. 오늘 런던에는 비가 오지 않았다. 게다가 그는 내내 당신의 뒤에만 서 있었지, 진흙탕 안쪽으로 들어간 적이 없다.</p>
+
+<p>당신이 장화를 빤히 쳐다보자, 방 안의 공기가 무겁게 가라앉는다.</p>
+
+<p>에드먼드가 등 뒤로, 아주 천천히 문고리를 향해 손을 뻗는다.</p>
+
+[[그가 도망치기 전에 몸을 날려 제압한다.->Chase]]
+[[문을 가로막고, 의자에 앉혀 직접 추궁한다.->Interrogate]]
+
+
+:: Chase
+<h2 class="location">— 런던의 뒷골목 —</h2>
+
+<img src="img/chase.jpg" class="passage-image" alt="비 오는 밤, 어두운 골목을 달리는 인물">
+
+<script>
+window._sfx = new Audio("audio/chase.mp3");
+window._sfx.volume = 0.5;
+window._sfx.play().catch(function(){});
+</script>
+
+<p>당신이 움직이는 순간, 에드먼드가 문을 박차고 뛰쳐나간다.</p>
+
+<p>어둠이 깔린 런던의 거리를 가로지르는 숨 막히는 추격전. 그가 시장 골목을 꺾어 달아나다 철제 난간에 팔이 걸린다. 천이 찢어지며 그의 맨팔이 드러난다.</p>
+
+<p>손목에서 팔꿈치까지 이어진, 누군가의 손톱에 깊게 파인 듯한 생생한 상처. 선술집 주인의 손등에 있던 것과 비슷한, 하지만 훨씬 깊은 자국.</p>
+
+<p>결국 막다른 골목. 벽에 등을 기댄 에드먼드가 거친 숨을 몰아쉰다. 당신이 권총을 겨눈 채 천천히 다가간다.</p>
+
+<p>그가 두 손을 천천히 들며 입을 연다.</p>
+
+<p><em>"...오해하신 겁니다, 탐정님. 저는 도박 빚이 있습니다. 몇 달째 채권자들이 보낸 자들에게 쫓기고 있어요. 탐정님이 갑자기 움직이자... 그들인 줄 알았습니다."</em></p>
+
+<p>그의 눈빛은 진심 어린 두려움처럼 보인다. 혹은 완벽하게 짜인 연기처럼도.</p>
+
+<<set $suspicion += 1>>
+
+<div class="clue-tag">심증 확보: 팔의 깊은 상처 — 그러나 변명도 있다 &nbsp;|&nbsp; 증거: $clues &nbsp;·&nbsp; 의심도: $suspicion</div>
+
+[[숨을 고르고, 그에게 판결을 내린다.->Accusation]]
+
+
+:: Interrogate
+<h2 class="location">— 베이커 스트리트, 당신의 숙소 —</h2>
+
+<img src="img/interrogate.jpg" class="passage-image" alt="촛불 켜진 테이블을 사이에 두고 마주 앉은 두 남자">
+
+<script>
+window._sfx = new Audio("audio/door_lock.mp3");
+window._sfx.volume = 0.6;
+window._sfx.play().catch(function(){});
+</script>
+
+<p>당신은 문을 걸어 잠그고 그를 의자에 앉힌다. 가장 차분한 목소리로 현장의 상황을 교차 검증하기 시작한다.</p>
+
+<p>에드먼드는 막힘없이 대답한다. 너무 유창해서 마치 대본을 읽는 것 같다.</p>
+
+<p><em>"시신은 엎드린 채 발견됐습니다. 얼굴 훼손이 심했고, 목에는 강한 압박 흔적이—"</em></p>
+
+<p><em>"잠깐."</em> 당신이 말을 끊는다. <em>"경찰 보고서엔 얼굴이 바닥을 향해 엎어져 있었다고 했네. 경관들이 시신을 뒤집기 전까진 얼굴이 훼손됐는지 아무도 알 수 없었어."</em></p>
+
+<p>당신은 그에게 보고서의 세부 내용을 말해준 적이 없다.</p>
+
+<p>벽난로 불씨가 타닥거린다. 에드먼드의 얼굴에서 처음으로 미소가 사라진다.</p>
+
+<<set $clues += 1>>
+
+<div class="clue-tag">결정적 단서: 그는 알아선 안 될 것을 알고 있었다 &nbsp;|&nbsp; 증거: $clues &nbsp;·&nbsp; 의심도: $suspicion</div>
+
+[[심문은 끝났다. 이제 결정을 내릴 시간이다.->Accusation]]
+
+
+:: Accusation
+<h2 class="location">— 결정의 순간 —</h2>
+
+<p>당신이 가진 조각들은 모두 모였다.</p>
+
+<p>이니셜 E. 긁힌 상처. 수첩을 든 신사. 모순된 증언들.</p>
+
+<p>선택하라, <strong>$playerName</strong> 탐정.</p>
+
+<<button "\"에드먼드 그레이브스. 당신이 화이트채플의 살인마요.\"">>
+  <<if ($clues + $suspicion) gte 3>>
+    <<goto "End_A">>
+  <<else>>
+    <<goto "End_B">>
+  <</if>>
+<</button>>
+
+<<button "\"진범은 텐 벨스의 주인 일라이어스다. 그를 체포한다.\"">>
+  <<goto "End_C">>
+<</button>>
+
+
+:: End_A
+<h2 class="location">— 엔딩 1 : 진실 —</h2>
+
+<img src="img/arrest.jpg" class="passage-image" alt="안개 속, 수갑을 찬 채 끌려가는 남자">
+
+<script>
+if (window._bgm) { window._bgm.pause(); window._bgmPlaying = false; }
+window._sfx = new Audio("audio/sting.mp3");
+window._sfx.volume = 0.7;
+window._sfx.play().catch(function(){});
+</script>
+
+<p>당신의 선언에 에드먼드는 잠시 침묵한다.</p>
+
+<p>이내 그가 어깨를 들썩이며 낮게 웃기 시작한다. 당신이 아주 훌륭한 농담을 한 것처럼.</p>
+
+<p><em>"언제쯤 제 그림자를 밟으실지, 줄곧 기다리고 있었습니다."</em></p>
+
+<p>그가 순순히 양손을 내민다.</p>
+
+<p><em>"6년입니다, $playerName 탐정님. 당신은 저를 전적으로 믿었죠. 당신의 가장 완벽한 무기이자, 가장 치명적인 맹점이 바로 저였다는 사실이 즐거웠습니다."</em></p>
+
+<p>순경들이 그에게 수갑을 채워 끌고 간다. 그는 한 번도 뒤돌아보지 않는다.</p>
+
+<p>당신은 서재에 홀로 남아, 그의 단정한 필체로 적힌 6년 치 사건 파일들을 멍하니 바라본다. 모든 사건의 중심에 그가 있었다.</p>
+
+<hr class="divider">
+
+<p class="ending-title">사건 종결. 그리고 새로운 악몽의 시작.</p>
+<p class="score-line">증거: $clues &nbsp;·&nbsp; 의심도: $suspicion</p>
+
+<<button "다시 시작한다.">>
+  <<run Engine.restart()>>
+<</button>>
+
+
+:: End_B
+<h2 class="location">— 엔딩 2 : 안개 속으로 —</h2>
+
+<img src="img/fog.jpg" class="passage-image" alt="안개 속으로 사라지는 외로운 실루엣">
+
+<script>
+if (window._bgm) { window._bgm.pause(); window._bgmPlaying = false; }
+window._sfx = new Audio("audio/fail.mp3");
+window._sfx.volume = 0.6;
+window._sfx.play().catch(function(){});
+</script>
+
+<p><em>"에드먼드... 당신인가?"</em></p>
+
+<p>당신의 목소리에는 확신이 부족했다. 증거가, 단서가 파편처럼 흩어져 맞춰지지 않았다.</p>
+
+<p>그 찰나의 망설임을 그는 놓치지 않았다. 그가 당신을 거칠게 밀치고 짙은 안개 속으로 몸을 던졌다. 당신이 뒤쫓았을 땐, 런던의 차가운 공기만이 남아 있을 뿐이었다.</p>
+
+<p>경시청은 병력을 풀었지만 그의 흔적조차 찾지 못했다. 기묘하게도 그날 이후, 화이트채플의 살인은 완벽하게 멈췄다. 범인이 떠났기 때문인지, 아니면 당신을 조롱하기 위함인지 알 수 없었다.</p>
+
+<p>당신은 오랫동안 그의 빈 의자를 치우지 못했다.</p>
+
+<hr class="divider">
+
+<p class="ending-title">미결. 영원히 풀리지 않을 수수께끼.</p>
+<p class="score-line">증거: $clues &nbsp;·&nbsp; 의심도: $suspicion</p>
+
+<<button "다시 시작한다.">>
+  <<run Engine.restart()>>
+<</button>>
+
+
+:: End_C
+<h2 class="location">— 엔딩 3 : 눈먼 자의 평화 —</h2>
+
+<img src="img/wrong.jpg" class="passage-image" alt="창살 너머 창문이 있는 감옥 독방">
+
+<script>
+if (window._bgm) { window._bgm.pause(); window._bgmPlaying = false; }
+window._sfx = new Audio("audio/fail.mp3");
+window._sfx.volume = 0.6;
+window._sfx.play().catch(function(){});
+</script>
+
+<p>당신의 지목으로 선술집 주인 일라이어스가 체포되었다. 그는 끝까지 결백을 주장했다. 술집에서 난동을 부리던 손님과 싸웠을 뿐이라며 울부짖었지만, 정황 증거와 당신의 완벽한 추리가 그의 목에 밧줄을 걸었다.</p>
+
+<p>일라이어스가 처형된 후, 화이트채플의 살인은 거짓말처럼 멈췄다. 사건은 성대하게 종결되었고, 당신은 런던의 영웅이 되었다.</p>
+
+<p>몇 주 뒤, 에드먼드가 축하 편지와 함께 차를 타왔다.</p>
+
+<p><em>"훌륭한 추리였습니다, 탐정님."</em></p>
+
+<p>그의 필체는 여전히 흠잡을 데 없이 단정했다. 하지만 그가 홍차를 내려놓을 때, 당신은 그의 셔츠 소매 사이로 언뜻 보이는 붉은 흉터를 본 것 같은 착각에 사로잡혔다.</p>
+
+<p>당신은 애써 고개를 저으며 찻잔을 들었다.</p>
+
+<hr class="divider">
+
+<p class="ending-title">종결. 혹은 가장 끔찍한 눈먼 자의 평화.</p>
+<p class="score-line">증거: $clues &nbsp;·&nbsp; 의심도: $suspicion</p>
+
+<<button "다시 시작한다.">>
+  <<run Engine.restart()>>
+<</button>>

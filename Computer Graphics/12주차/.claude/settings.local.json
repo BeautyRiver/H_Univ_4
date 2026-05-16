@@ -1,0 +1,14 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(python -c \"import PyPDF2; print\\('ok'\\)\")",
+      "Bash(python -c \"import fitz; print\\('ok'\\)\")",
+      "Bash(python -c \"import pdfplumber; print\\('ok'\\)\")",
+      "Bash(python -c ' *)",
+      "PowerShell(Remove-Item \"C:\\\\minkang_github\\\\H_Univ_4\\\\Computer Graphics\\\\12����\\\\PA03\\\\.vs\" -Recurse -Force -Confirm:$false)",
+      "PowerShell(Remove-Item \"C:\\\\minkang_github\\\\H_Univ_4\\\\Computer Graphics\\\\12����\\\\PA03\\\\x64\" -Recurse -Force -Confirm:$false)",
+      "PowerShell(Remove-Item \"C:\\\\minkang_github\\\\H_Univ_4\\\\Computer Graphics\\\\12����\\\\PA03\\\\Framework\\\\x64\" -Recurse -Force -Confirm:$false)",
+      "WebSearch"
+    ]
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "permissions": {
+    "allow": [
+      "Skill(update-config)",
+      "WebFetch(domain:www.youtube.com)",
+      "WebSearch",
+      "Bash(nlm skill *)",
+      "Bash(nlm --help)",
+      "Bash(nlm *)",
+      "Bash(python3 *)",
+      "Bash(ls *)"
+    ]
+  }
+}

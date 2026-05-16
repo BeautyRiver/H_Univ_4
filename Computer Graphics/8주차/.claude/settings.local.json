@@ -1,0 +1,20 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(unzip -o CG-02-01-Shaders-vs2022.zip -d CG-02-01-Shaders-vs2022)",
+      "Bash(nlm --version)",
+      "Bash(nlm login:*)",
+      "Bash(python -c ':*)",
+      "Bash(pip install:*)",
+      "Bash(python -c \" from pypdf import PdfReader files = [ \\('3주차', 'C:/minkang_github/H_Univ_4/결혼학개론/강의록들/3주차_건강한연대와진정한자립\\(강의안\\).pdf'\\), \\('4주차', 'C:/minkang_github/H_Univ_4/결혼학개론/강의록들/4주차_사랑과친밀한관계형성\\(강의안\\).pdf'\\), \\('5주차', 'C:/minkang_github/H_Univ_4/결혼학개론/강의록들/5주차_배우자선택과결혼준비\\(강의안\\).pdf'\\), \\('6주차', 'C:/minkang_github/H_Univ_4/결혼학개론/강의록들/6주차_친밀한폭력\\(강의안\\).pdf'\\), ] for week, path in files: print\\(f'===== {week} ====='\\) reader = PdfReader\\(path\\) for page in reader.pages: text = page.extract_text\\(\\) if text: print\\(text\\) print\\(\\) \")",
+      "Bash(nlm notebook:*)",
+      "Bash(nlm alias:*)",
+      "Bash(nlm source:*)",
+      "Bash(python read_notes.py w1)",
+      "Bash(python read_notes.py w3)",
+      "Bash(nlm note:*)",
+      "Bash(mkdir -p \"C:/minkang_github/H_Univ_4/Computer Graphics/8주차/HW3/img\")",
+      "Bash(mkdir -p \"C:/minkang_github/H_Univ_4/Computer Graphics/8주차/HW3/audio\")"
+    ]
+  }
+}
