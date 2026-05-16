@@ -427,3 +427,129 @@ FodyWeavers.xsd
 *.msix
 *.msm
 *.msp
+
+# ================================
+# 대용량 미디어 파일
+# ================================
+*.mp4
+*.avi
+*.mov
+*.mkv
+*.wmv*.flv
+*.webm
+
+# ================================
+# C++ 빌드 바이너리
+# ================================
+*.exe
+*.dll
+*.lib
+*.a
+*.so
+*.so.*
+*.dylib
+*.exp
+*.def
+
+# ================================
+# DirectX / HLSL 컴파일 결과물
+# ================================
+*.cso          # Compiled Shader Object
+*.fxo          # Effect Compiled
+*.dxbc         # DirectX Bytecode
+*.dxil         # DirectX Intermediate Language
+
+# ================================
+# 텍스처 / 이미지 에셋 (대용량)
+# ================================
+*.dds          # DirectX Texture
+*.tga
+*.hdr
+*.exr
+*.psd
+*.psb
+*.tif
+*.tiff
+*.bmp
+*.raw
+
+# ================================
+# 3D 모델 에셋
+# ================================
+*.fbx
+*.obj
+*.3ds
+*.max
+*.blend
+*.blend1
+*.dae
+*.gltf
+*.glb
+*.mesh
+
+# ================================
+# 오디오 파일 (대용량)
+# ================================
+*.wav
+*.mp3
+*.ogg
+*.flac
+*.aiff
+*.aac
+
+# ================================
+# 압축 아카이브
+# ================================
+*.zip
+*.7z
+*.rar
+*.tar
+*.gz
+*.tar.gz
+*.tar.bz2
+
+# ================================
+# CMake 빌드 시스템
+# ================================
+CMakeCache.txt
+CMakeFiles/
+cmake_install.cmake
+cmake-build-*/
+build/
+_build/
+out/build/
+
+# ================================
+# Windows 시스템 파일
+# ================================
+Thumbs.db
+Thumbs.db:encryptable
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+
+# macOS (혹시 맥 쓰는 팀원 대비)
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# ================================
+# vcpkg / Conan 패키지 매니저
+# ================================
+vcpkg_installed/
+.vcpkg/
+conanbuildinfo.*
+conan.lock
+graph_info.json
+
+# ================================
+# 강의 실습 결과물 (빌드 산출물)
+# ================================
+x64/
+x86/
+Win32/
+ARM/
+ARM64/
+ipch/
+*.ib_pdb_index
+*.idb
